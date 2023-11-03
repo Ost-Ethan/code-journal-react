@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import './data.ts';
+import { UnsavedEntry, addEntry, readEntries } from './data.ts';
 
 export function Header() {
   return (
@@ -79,7 +81,7 @@ export function NotesInput({ setNotes }: NotesInputProps) {
 export function SubmitButton() {
   return (
     <div className="column-full d-flex justify-between">
-      <button></button>
+      <button>Delete</button>
       <button className="input-b-radius text-padding purple-background white-text right-button">
         Save
       </button>
@@ -97,6 +99,16 @@ export function NewEntryForm() {
     console.log(title);
     console.log(imgUrl);
     console.log(notes);
+
+    const entriesObject: UnsavedEntry = {
+      title: title,
+      photoUrl: imgUrl,
+      notes: notes,
+    };
+
+    console.log(entriesObject);
+
+    addEntry(entriesObject);
   }
 
   return (
