@@ -88,8 +88,11 @@ export function SubmitButton() {
     </div>
   );
 }
-
-export function NewEntryForm() {
+type NewEntryFormProps = {
+  setView: (view: boolean) => void;
+  view: boolean;
+};
+export function NewEntryForm({ setView, view }: NewEntryFormProps) {
   const [title, setTitle] = useState('');
   const [imgUrl, setImgUrl] = useState('');
   const [notes, setNotes] = useState('');
@@ -109,6 +112,7 @@ export function NewEntryForm() {
     console.log(entriesObject);
 
     addEntry(entriesObject);
+    setView(!view);
   }
 
   return (
@@ -132,4 +136,24 @@ export function NewEntryForm() {
       </form>
     </>
   );
+}
+
+export function EntriesView() {
+  return (
+    <div className="container">
+      <div className="row">
+        <h1>Entries</h1>
+        <a>new</a>
+      </div>
+      <div>
+        <img src="/placeholder-image-square.jpg" alt="someimage"></img>
+        <h3>test</h3>
+        <p>notes</p>
+      </div>
+    </div>
+  );
+}
+
+export function EntriesList() {
+  return <div>words</div>;
 }
