@@ -24,7 +24,10 @@ type ImgContainerProps = {
 export function ImageContainer({ src }: ImgContainerProps) {
   return (
     <div className="column-half">
-      <img id="formImage" className="input-b-radius form-image" src={src}></img>
+      <img
+        id="formImage"
+        className="input-b-radius form-image"
+        src={src === '' ? src : '/placeholder-image-square.jpg'}></img>
     </div>
   );
 }
@@ -50,7 +53,7 @@ export function TitleInput({ setTitle, setImgUrl, imgUrl }: InputProps) {
         Photo URL
       </label>
       <input
-        value={imgUrl}
+        value={imgUrl === '' ? '/public/placeholder-image-square.jpg' : imgUrl}
         onChange={(e) => setImgUrl(e.target.value)}
         id="formURL"
         className="input-b-color text-padding input-b-radius purple-outline input-height margin-bottom-2 d-block width-100"
@@ -138,48 +141,53 @@ export function NewEntryForm({ setView, view }: NewEntryFormProps) {
   );
 }
 
-export function EntriesView() {
+type EntriesViewProps = {
+  setView: (view: boolean) => void;
+  view: boolean;
+};
+
+export function EntriesView({ setView, view }: EntriesViewProps) {
   return (
     <div className="container">
       <div className="row">
         <div className="column-full d-flex justify-between align-center">
           <h1>Entries</h1>
-          <a className="white-text form-link">New</a>
+          <a onClick={() => setView(!view)} className="white-text form-link">
+            New
+          </a>
         </div>
       </div>
-        <EntriesListItem/>
+      <EntriesListItem />
     </div>
   );
 }
 
 export function EntriesListItem() {
+  const entries = readEntries();
+  console.log(entries);
 
-const entries = readEntries();
-console.log(entries)
-
-const mappedEntries = entries.map((item) =>{
-    return (<li key={item.entryId}>
-      <div className="row">
-        <div className="column-half">
-          <img
-            className="input-b-radius form-image"
-            src={item.photoUrl}
-            alt="someimage"></img>
+  const mappedEntries = entries.map((item) => {
+    return (
+      <li key={item.entryId}>
+        <div className="row">
+          <div className="column-half">
+            <img
+              className="input-b-radius form-image"
+              src={item.photoUrl}
+              alt="someimage"></img>
+          </div>
+          <div className="column-half">
+            <h3 className="column-full d-flex justify-between align-center">
+              {item.title}
+            </h3>
+            <p>{item.notes}</p>
+          </div>
         </div>
-        <div className="column-half">
-          <h3 className="column-full d-flex justify-between align-center">
-            {item.title}
-          </h3>
-          <p>{item.notes}</p>
-        </div>
-      </div>
-    </li>)
-})
+      </li>
+    );
+  });
 
-console.log("value of mappedEntries:", mappedEntries)
+  console.log('value of mappedEntries:', mappedEntries);
 
-
-  return (
-  <ul className="entry-ul">{mappedEntries}</ul>
-  );
+  return <ul className="entry-ul">{mappedEntries}</ul>;
 }

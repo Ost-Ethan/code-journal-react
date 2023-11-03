@@ -12,7 +12,7 @@ function App() {
         {view ? (
           <NewEntryForm setView={setView} view={view} />
         ) : (
-          <EntriesView />
+          <EntriesView setView={setView} view={view} />
         )}
       </div>
     </>
