@@ -142,18 +142,44 @@ export function EntriesView() {
   return (
     <div className="container">
       <div className="row">
-        <h1>Entries</h1>
-        <a>new</a>
+        <div className="column-full d-flex justify-between align-center">
+          <h1>Entries</h1>
+          <a className="white-text form-link">New</a>
+        </div>
       </div>
-      <div>
-        <img src="/placeholder-image-square.jpg" alt="someimage"></img>
-        <h3>test</h3>
-        <p>notes</p>
-      </div>
+        <EntriesListItem/>
     </div>
   );
 }
 
-export function EntriesList() {
-  return <div>words</div>;
+export function EntriesListItem() {
+
+const entries = readEntries();
+console.log(entries)
+
+const mappedEntries = entries.map((item) =>{
+    return (<li key={item.entryId}>
+      <div className="row">
+        <div className="column-half">
+          <img
+            className="input-b-radius form-image"
+            src={item.photoUrl}
+            alt="someimage"></img>
+        </div>
+        <div className="column-half">
+          <h3 className="column-full d-flex justify-between align-center">
+            {item.title}
+          </h3>
+          <p>{item.notes}</p>
+        </div>
+      </div>
+    </li>)
+})
+
+console.log("value of mappedEntries:", mappedEntries)
+
+
+  return (
+  <ul className="entry-ul">{mappedEntries}</ul>
+  );
 }
