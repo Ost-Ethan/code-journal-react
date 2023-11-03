@@ -1,5 +1,6 @@
 import './App.css';
-import {
+import './styles.css'
+import NewEntryForm, {
   Header,
   ImageContainer,
   TitleInput,
@@ -11,13 +12,10 @@ import {
 function App() {
   return (
     <>
-      <Header />
-      <h1>New Entry</h1>
-      <ImageContainer />
-      <TitleInput />
-      <ImageUrlInput />
-      <NotesInput />
-      <Button text="save" />
+        <Header />
+      <div className="container">
+        <NewEntryForm />
+      </div>
     </>
   );
 }
