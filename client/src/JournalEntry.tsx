@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 export function Header() {
   return (
@@ -15,24 +15,31 @@ export function Header() {
   );
 }
 
-export function ImageContainer() {
+type ImgContainerProps = {
+  src: string;
+};
+
+export function ImageContainer({ src }: ImgContainerProps) {
   return (
     <div className="column-half">
-      <img
-        id="formImage"
-        className="input-b-radius form-image"
-        src="../public/placeholder-image-square.jpg"></img>
+      <img id="formImage" className="input-b-radius form-image" src={src}></img>
     </div>
   );
 }
+type InputProps = {
+  setTitle: (string: string) => void;
+  setImgUrl: (string: string) => void;
+  imgUrl: string;
+};
 
-export function TitleInput() {
+export function TitleInput({ setTitle, setImgUrl, imgUrl }: InputProps) {
   return (
     <>
       <label className="margin-bottom-1 d-block" htmlFor="title">
         Title
       </label>
       <input
+        onChange={(e) => setTitle(e.target.value)}
         id="formTitle"
         className="input-b-color text-padding input-b-radius purple-outline input-height margin-bottom-2 d-block width-100"
         name="title"
@@ -41,6 +48,8 @@ export function TitleInput() {
         Photo URL
       </label>
       <input
+        value={imgUrl}
+        onChange={(e) => setImgUrl(e.target.value)}
         id="formURL"
         className="input-b-color text-padding input-b-radius purple-outline input-height margin-bottom-2 d-block width-100"
         name="imageUrl"
@@ -48,13 +57,17 @@ export function TitleInput() {
     </>
   );
 }
+type NotesInputProps = {
+  setNotes: (string: string) => void;
+};
 
-export function NotesInput() {
+export function NotesInput({ setNotes }: NotesInputProps) {
   return (
     <div className="column-full">
       <label>
         Notes:
         <textarea
+          onChange={(e) => setNotes(e.target.value)}
           className="input-b-color text-padding input-b-radius purple-outline d-block width-100"
           cols={30}
           rows={10}></textarea>
@@ -62,7 +75,6 @@ export function NotesInput() {
     </div>
   );
 }
-
 
 export function SubmitButton() {
   return (
@@ -75,31 +87,36 @@ export function SubmitButton() {
   );
 }
 
+export function NewEntryForm() {
+  const [title, setTitle] = useState('');
+  const [imgUrl, setImgUrl] = useState('');
+  const [notes, setNotes] = useState('');
 
-
-export default function NewEntryForm() {
-
-
-  function handleSubmit (e:React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    console.log(title);
+    console.log(imgUrl);
+    console.log(notes);
   }
-
 
   return (
     <>
       <h1>New Entry</h1>
       <form id="entryForm" onSubmit={(e) => handleSubmit(e)}>
         <div className="row margin-bottom-1">
-          <ImageContainer />
+          <ImageContainer src={imgUrl} />
           <div className="column-half">
-            <TitleInput />
+            <TitleInput
+              setTitle={setTitle}
+              setImgUrl={setImgUrl}
+              imgUrl={imgUrl}
+            />
           </div>
         </div>
         <div className="row margin-bottom-1">
-          <NotesInput />
+          <NotesInput setNotes={setNotes} />
         </div>
-       <SubmitButton/>
+        <SubmitButton />
       </form>
     </>
   );

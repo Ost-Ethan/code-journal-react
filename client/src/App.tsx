@@ -1,18 +1,11 @@
 import './App.css';
-import './styles.css'
-import NewEntryForm, {
-  Header,
-  ImageContainer,
-  TitleInput,
-  ImageUrlInput,
-  NotesInput,
-  Button,
-} from './JouranalEntry.tsx';
+import './styles.css';
+import { NewEntryForm, Header } from './JournalEntry.tsx';
 
 function App() {
   return (
     <>
-        <Header />
+      <Header />
       <div className="container">
         <NewEntryForm />
       </div>
