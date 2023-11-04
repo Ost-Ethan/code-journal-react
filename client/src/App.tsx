@@ -4,16 +4,14 @@ import { NewEntryForm, Header, EntriesView } from './JournalEntry.tsx';
 import { useState } from 'react';
 
 function App() {
-  const [view, setView] = useState(false);
+  const [view, setView] = useState('');
   return (
     <>
-      <Header />
+      <Header setView={setView} />
       <div className="container">
-        {view ? (
-          <NewEntryForm setView={setView} view={view} />
-        ) : (
-          <EntriesView setView={setView} view={view} />
-        )}
+        {view === 'entries' && <EntriesView setView={setView} view={view} />}
+        {view === 'new' && <NewEntryForm setView={setView} view={view} />}
+        {view === 'edit' && <p>words</p>}
       </div>
     </>
   );

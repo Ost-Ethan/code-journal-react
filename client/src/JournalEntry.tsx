@@ -1,15 +1,24 @@
 import React, { useState } from 'react';
 import './data.ts';
 import { UnsavedEntry, addEntry, readEntries } from './data.ts';
+import { FaPen } from 'react-icons/fa';
 
-export function Header() {
+type HeaderProps = {
+  setView: (view: string) => void;
+};
+
+export function Header({ setView }: HeaderProps) {
   return (
     <div className="header purple-background">
       <div className="container">
         <div className="row">
           <div className="column-full d-flex align-center">
             <h1 className="white-text">Code Journal</h1>
-            <a className="entries-link white-text">Entries</a>
+            <a
+              onClick={() => setView('entries')}
+              className="entries-link white-text">
+              Entries
+            </a>
           </div>
         </div>
       </div>
@@ -84,7 +93,7 @@ export function NotesInput({ setNotes }: NotesInputProps) {
 export function SubmitButton() {
   return (
     <div className="column-full d-flex justify-between">
-      <button>Delete</button>
+      {<button>Delete</button>}
       <button className="input-b-radius text-padding purple-background white-text right-button">
         Save
       </button>
@@ -92,10 +101,10 @@ export function SubmitButton() {
   );
 }
 type NewEntryFormProps = {
-  setView: (view: boolean) => void;
-  view: boolean;
+  setView: (view: string) => void;
+  view: string;
 };
-export function NewEntryForm({ setView, view }: NewEntryFormProps) {
+export function NewEntryForm({ setView }: NewEntryFormProps) {
   const [title, setTitle] = useState('');
   const [imgUrl, setImgUrl] = useState('');
   const [notes, setNotes] = useState('');
@@ -115,7 +124,7 @@ export function NewEntryForm({ setView, view }: NewEntryFormProps) {
     console.log(entriesObject);
 
     addEntry(entriesObject);
-    setView(!view);
+    setView('entries');
   }
 
   return (
@@ -142,27 +151,31 @@ export function NewEntryForm({ setView, view }: NewEntryFormProps) {
 }
 
 type EntriesViewProps = {
-  setView: (view: boolean) => void;
-  view: boolean;
+  setView: (view: string) => void;
+  view: string;
 };
 
-export function EntriesView({ setView, view }: EntriesViewProps) {
+export function EntriesView({ setView }: EntriesViewProps) {
   return (
     <div className="container">
       <div className="row">
         <div className="column-full d-flex justify-between align-center">
           <h1>Entries</h1>
-          <a onClick={() => setView(!view)} className="white-text form-link">
+          <a
+            onClick={() => setView('entries')}
+            className="white-text form-link">
             New
           </a>
         </div>
       </div>
-      <EntriesListItem />
+      <EntriesListItem setView={setView} />
     </div>
   );
 }
-
-export function EntriesListItem() {
+type EntriesListItemProps = {
+  setView: (view: string) => void;
+};
+export function EntriesListItem({ setView }: EntriesListItemProps) {
   const entries = readEntries();
   console.log(entries);
 
@@ -179,6 +192,7 @@ export function EntriesListItem() {
           <div className="column-half">
             <h3 className="column-full d-flex justify-between align-center">
               {item.title}
+              <FaPen onClick={() => setView('edit')} />
             </h3>
             <p>{item.notes}</p>
           </div>
